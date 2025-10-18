@@ -7,39 +7,7 @@ void MessageHandler(SKSE::MessagingInterface::Message* a_message)
 	}
 }
 
-#ifdef SKYRIM_AE
-extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
-	SKSE::PluginVersionData v;
-	v.PluginVersion(Version::MAJOR);
-	v.PluginName("Regional Save Names");
-	v.AuthorName("powerofthree");
-	v.UsesAddressLibrary();
-	v.UsesNoStructs();
-	v.CompatibleVersions({ SKSE::RUNTIME_LATEST });
 
-	return v;
-}();
-#else
-extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
-{
-	a_info->infoVersion = SKSE::PluginInfo::kVersion;
-	a_info->name = "Regional Save Names";
-	a_info->version = Version::MAJOR;
-
-	if (a_skse->IsEditor()) {
-		logger::critical("Loaded in editor, marking as incompatible"sv);
-		return false;
-	}
-
-	const auto ver = a_skse->RuntimeVersion();
-	if (ver < SKSE::RUNTIME_1_5_39) {
-		logger::critical(FMT_STRING("Unsupported runtime version {}"), ver.string());
-		return false;
-	}
-
-	return true;
-}
-#endif
 
 void InitializeLog()
 {
