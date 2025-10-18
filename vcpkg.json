@@ -7,7 +7,9 @@
   "dependencies": [
     "boost-stl-interfaces",
     "rsm-binary-io",
+    "fmt",
     "spdlog",
+    "commonlibsse-ng-flatrim",
     "xbyak"
   ]
 }

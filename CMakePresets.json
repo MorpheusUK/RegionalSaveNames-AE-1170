@@ -6,10 +6,14 @@
         "CMAKE_BUILD_TYPE": {
           "type": "STRING",
           "value": "Release"
+        },
+        "CMAKE_CONFIGURATION_TYPES": {
+          "type": "STRING",
+          "value": "Release"
         }
       },
       "errors": {
-        "deprecated": true
+        "deprecated": false
       },
       "hidden": true,
       "name": "cmake-dev",
@@ -22,7 +26,11 @@
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": {
           "type": "STRING",
-          "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+          "value": "$env{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_OVERLAY_PORTS": {
+          "type": "STRING",
+          "value": "${sourceDir}/cmake/ports"
         }
       },
       "hidden": true,
@@ -32,19 +40,23 @@
       "cacheVariables": {
         "CMAKE_MSVC_RUNTIME_LIBRARY": {
           "type": "STRING",
-          "value": "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+          "value": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
         },
         "VCPKG_TARGET_TRIPLET": {
           "type": "STRING",
-          "value": "x64-windows-static"
+          "value": "x64-windows-static-md"
         }
       },
       "hidden": true,
       "name": "windows"
     },
     {
+      "architecture": {
+        "strategy": "set",
+        "value": "x64"
+      },
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX /external:W0 $penv{CXXFLAGS}"
+        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX /wd4996"
       },
       "generator": "Visual Studio 17 2022",
       "inherits": [
@@ -52,23 +64,22 @@
         "vcpkg",
         "windows"
       ],
-      "name": "vs2022-windows-vcpkg-se",
+      "hidden": true,
+      "name": "vs2022-windows",
       "toolset": "v143"
     },
     {
-      "binaryDir": "${sourceDir}/buildae",
+      "binaryDir": "${sourceDir}/build/skyrim",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX /external:W0 $penv{CXXFLAGS}",
-        "BUILD_SKYRIMAE": true
+        "BUILD_SKYRIM": true
       },
-      "generator": "Visual Studio 17 2022",
       "inherits": [
         "cmake-dev",
         "vcpkg",
-        "windows"
+        "windows",
+        "vs2022-windows"
       ],
-      "name": "vs2022-windows-vcpkg-ae",
-      "toolset": "v143"
+      "name": "skyrim"
     }
   ],
   "version": 3
